@@ -509,6 +509,8 @@ pub trait Simd {
             unsafe fn fast_hypot_ps(a:Self::Vf32,b:Self::Vf32) -> Self::Vf32;
 
             unsafe fn fmod_ps(a:Self::Vf32,b:Self::Vf32) -> Self::Vf32;
+
+            unsafe fn fast_sin_pd(a: Self::Vf64) -> Self::Vf64;
         }
     }
 }

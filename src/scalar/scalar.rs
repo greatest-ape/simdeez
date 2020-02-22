@@ -761,6 +761,10 @@ impl Simd for Scalar {
             unsafe fn fmod_ps(a:Self::Vf32,b:Self::Vf32) -> Self::Vf32 {
                 F32x1(a.0 % b.0)
             }
+            #[inline(always)]
+            unsafe fn fast_sin_pd(a: Self::Vf64) -> Self::Vf64 {
+                F64x1(a.0.sin())
+            }
         }
     }
 }

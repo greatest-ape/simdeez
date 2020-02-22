@@ -4,6 +4,7 @@ use crate::sse41::{F32x4, F64x2};
 use super::*;
 use core::mem;
 
+
 pub struct Avx2;
 impl Simd for Avx2 {
     type Vi16 = I16x16;
@@ -736,6 +737,16 @@ impl Simd for Avx2 {
                 let fmod1 = F32x4(sleef_sys::Sleef_fmodf4_sse4(_mm_loadu_ps(&a[0]),_mm_loadu_ps(&b[0])));
                 let fmod2 = F32x4(sleef_sys::Sleef_fmodf4_sse4(_mm_loadu_ps(&a[4]),_mm_loadu_ps(&b[4])));
                 F32x8(_mm256_loadu2_m128(&fmod2[0], &fmod1[0]))
+            }
+
+            #[inline(always)]
+            unsafe fn fast_sin_pd(a: Self::Vf64) -> Self::Vf64 {
+                let sin1 = F64x2(sleef_sys::Sleef_sind2_u35sse4(_mm_loadu_pd(&a[0])));
+                let sin2 = F64x2(sleef_sys::Sleef_sind2_u35sse4(_mm_loadu_pd(&a[2])));
+                F64x4(_mm256_loadu2_m128d(&sin2[0], &sin1[0]))
+
+                // Faster:
+                // F64x4(sleef_sys::Sleef_sind4_u35avx2(a.0))
             }
         }
     }
