@@ -795,7 +795,10 @@ impl Simd for Sse2 {
             unsafe fn fmod_ps(a:Self::Vf32,b:Self::Vf32) -> Self::Vf32 {
                 F32x4(sleef_sys::Sleef_fmodf4_sse2(a.0,b.0))
             }
-
+            #[inline(always)]
+            unsafe fn fast_sin_pd(a: Self::Vf64) -> Self::Vf64 {
+                F64x2(sleef_sys::Sleef_sind2_u35sse2(a.0))
+            }
         }
     }
 }
