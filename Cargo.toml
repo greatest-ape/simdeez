@@ -16,9 +16,15 @@ sleef = ["sleef-sys"]
 
 [dependencies]
 paste = "0.1.6"
-# To build this, we need nightly, cmake installed, and clang dlls in the clang dll path
-sleef-sys = {version = "0.1.2", optional=true}
 cfg-if = "0.1.10"
+
+# To build this, we need nightly, cmake installed, and clang dlls in the clang dll path
+# Use Octasine branch which supports static linking and alwys generating SSE and AVX instructions
+[dependencies.sleef-sys]
+git = 'https://github.com/greatest-ape/sleef-sys.git'
+branch = "octasine"
+features = ["static"]
+optional=true
 
 [dev-dependencies]
 criterion = "0.3.0"
@@ -26,4 +32,3 @@ rand = "0.7.2"
 [[bench]]
 name = "benchmarks"
 harness = false
-
